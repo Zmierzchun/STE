@@ -1,0 +1,109 @@
+#Struktura obiektu TASK (Zadanie)
+
+STEBundle\Entity\Task:
+    type: entity
+    table: null
+    repositoryClass: STEBundle\Repository\TaskRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+
+        content:    #treść zadania jeśli to zadanie z treścią
+            type: text
+            nullable: true
+            unique: true
+
+        scoring:    #punktacja
+            type: integer
+
+        timeConsumption:  #czasochłonność rozwiązania
+            type: datetime
+
+
+    oneToOne:
+
+        solution:     ##rozwiązanie do zadania
+            targetEntity: STEBundle\Entity\Solution
+            inversedBy: task
+
+    manyToOne:
+
+        requirement:  ##wymaganie przypisane do zadania (konieczne, podstawowe... itd.)
+            targetEntity: STEBundle\Entity\Requirement
+            inversedBy: tasks
+
+        taskType:     ##typ zadania (otwarte/zamknięte, jedno-, wielokrotnego wyboru itp.)
+            targetEntity: STEBundle\Entity\TaskType
+            inversedBy: tasks
+
+        command:      ##polecenie do zadania
+            targetEntity: STEBundle\Entity\Command
+            inversedBy: tasks
+
+    manyToMany:
+        aims:          ##cel zadania (sprawdzenie: umiejętności, rozumienia, wiedzy itp.)
+            targetEntity: STEBundle\Entity\Aim
+            inversedBy: tasks
+            joinTable:
+                            name: tasks_aims
+                            joinColumns:
+                                problemId:
+                                    referencedColumnName: id
+                            inverseJoinColumns:
+                                taskId:
+                                    referencedColumnName: id
+
+        problemsChecked:      ##tablica etykiet problemów sprawdzanych przez zadanie (na wzór tagów)
+            targetEntity: STEBundle\Entity\Problem
+            inversedBy: tasks
+            joinTable:
+                name: tasks_problems
+                joinColumns:
+                    problemId:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    taskId:
+                        referencedColumnName: id
+
+        tips:         ##tablica wskazówek do rozwiązania zadania.
+            targetEntity: STEBundle\Entity\Tip
+            inversedBy: tasks
+            joinTable:
+                name: tasks_tips
+                joinColumns:
+                    tipId:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    taskId:
+                        referencedColumnName: id
+
+        correctAnswers:   ##tablica poprawnych odpowiedzi (jedna lub kilka)
+            targetEntity: STEBundle\Entity\Answer
+            inversedBy: correctForTasks
+            joinTable:
+                name: tasks_correctAnswers
+                joinColumns:
+                    tipId:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    taskId:
+                        referencedColumnName: id
+
+        incorrectAnswers:   ##tablica błędnych odpowiedzi (dla zadań z wyborem odpowiedzi)
+            targetEntity: STEBundle\Entity\Answer
+            inversedBy: incorrectForTasks
+            joinTable:
+                name: tasks_incorrectAnswers
+                joinColumns:
+                    tipId:
+                        referencedColumnName: id
+                inverseJoinColumns:
+                    taskId:
+                        referencedColumnName: id
+            nullable: true
+
+    lifecycleCallbacks: {  }

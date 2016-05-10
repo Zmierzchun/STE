@@ -1,0 +1,3 @@
+ste_homepage:
+    path:     /
+    defaults: { _controller: STEBundle:Default:index }

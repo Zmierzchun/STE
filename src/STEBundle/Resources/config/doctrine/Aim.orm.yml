@@ -1,0 +1,33 @@
+#Struktura obiektu Aim (Cel) (wg Niemirowskiego)
+STEBundle\Entity\Aim:
+    type: entity
+    table: null
+    repositoryClass: STEBundle\Repository\AimRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        abbreviation: #jednoliterowy skrót nazwy celu (A,B,C,D)
+            type: string
+            length: 1
+            unique: true
+            nullable: false
+
+        name:   #nazwa celu
+            type: string
+            length: 255
+            unique: true
+
+        description:  #opis celu
+            type: text
+            unique: true
+
+    manyToMany:
+        tasks:  #każde zadanie może być środkiem sprawdzającym wiele celów kształcenia
+            targetEntity: STEBundle\Entity\Task
+            mappedBy: aims
+
+    lifecycleCallbacks: {  }

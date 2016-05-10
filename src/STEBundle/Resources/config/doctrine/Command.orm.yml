@@ -1,0 +1,23 @@
+#Struktura obiektu COMMAND (Polecenie)
+
+STEBundle\Entity\Command:
+    type: entity
+    table: null
+    repositoryClass: STEBundle\Repository\CommandRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        content:  #treść polecenia
+            type: text
+            unique: true
+
+    oneToMany:
+        tasks:
+            targetEntity: STEBundle\Entity\Task
+            mappedBy: command
+
+    lifecycleCallbacks: {  }

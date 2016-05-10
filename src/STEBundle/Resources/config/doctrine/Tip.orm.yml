@@ -1,0 +1,25 @@
+#Struktura obiektu TIP (Podpowiedź)
+STEBundle\Entity\Tip:
+    type: entity
+    table: null
+    repositoryClass: STEBundle\Repository\TipRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        content:    #treść podpowiedzi
+            type: text
+
+        scoreCost:  #koszt punktowy wykorzystania podpowiedzi
+            type: integer
+            nullable: false
+
+    manyToMany:
+        tasks:
+            targetEntity: STEBundle\Entity\Task
+            mappedBy: tips
+
+    lifecycleCallbacks: {  }

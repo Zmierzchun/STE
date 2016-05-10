@@ -1,0 +1,26 @@
+#Struktura obiektu ANSWER (Odpowiedź)
+STEBundle\Entity\Answer:
+    type: entity
+    table: null
+    repositoryClass: STEBundle\Repository\AnswerRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        content:    #treść odpowiedzi
+            type: text
+
+    manyToMany:
+
+        correctForTasks:
+            targetEntity: STEBundle\Entity\Task
+            mappedBy: correctAnswers
+
+        incorrectForTasks:
+            targetEntity: STEBundle\Entity\Task
+            mappedBy: incorrectAnswers
+
+    lifecycleCallbacks: {  }

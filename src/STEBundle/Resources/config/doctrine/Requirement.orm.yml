@@ -1,0 +1,43 @@
+#Struktura obiektu REQUIREMENT (Wymaganie)
+# (K,P,R,D
+#
+#
+
+STEBundle\Entity\Requirement:
+    type: entity
+    table: null
+    repositoryClass: STEBundle\Repository\RequirementRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        abbreviation: #jednoliterowy skrót nazwy wymagania (K,P,R,D,W)
+            type: string
+            length: 1
+            unique: true
+            nullable: false
+
+        name:   #nazwa wymagania
+            type: string
+            length: 255
+            unique: true
+
+        description:  #opis wymagania co uczeń powinien umieć, wiedzieć i na jaką to jest ocenę
+            type: text
+            unique: true
+
+    oneToMany:
+        tasks:    #jedno wymaganie może zostać przypisane do wielu zadań
+            targetEntity: STEBundle\Entity\Task
+            mappedBy: requirement
+
+        problems: #jedno wymaganie może składać się z wielu zagadnień
+            targetEntity: STEBundle\Entity\Problem
+            mappedBy: requirement
+
+
+    lifecycleCallbacks: {  }

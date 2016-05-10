@@ -1,0 +1,30 @@
+#Struktura obiektu PROBLEM (Zagadnienie)
+
+STEBundle\Entity\Problem:
+    type: entity
+    table: null
+    repositoryClass: STEBundle\Repository\ProblemRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: 255
+            nullable: false
+            unique: true
+
+    manyToMany:
+        tasks:        #każde zadanie może zawierać wiele zagadnień
+            targetEntity: STEBundle\Entity\Task
+            mappedBy: problemsChecked
+
+    manyToOne:
+        requirement:  #wiele zagadnień można zawrzeć w jednym wymaganiu
+            targetEntity: STEBundle\Entity\Requirement
+            inversedBy: problems
+
+    lifecycleCallbacks: {  }

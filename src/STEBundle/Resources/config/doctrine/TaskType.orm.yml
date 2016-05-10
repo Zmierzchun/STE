@@ -1,0 +1,24 @@
+#Struktura obiektu TaskType (Typ Zadania)
+STEBundle\Entity\TaskType:
+    type: entity
+    table: null
+    repositoryClass: STEBundle\Repository\TaskTypeRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:     #nazwa typu zadania
+            type: string
+            length: 255
+            unique: true
+
+    oneToMany:
+        tasks:    #relacja z obiektem zadanie
+            targetEntity: STEBundle\Entity\Task
+            mappedBy: taskType
+
+
+    lifecycleCallbacks: {  }

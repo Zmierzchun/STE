@@ -1,0 +1,25 @@
+#Struktura obiektu SOLUTION (Rozwiązanie)
+
+STEBundle\Entity\Solution:
+    type: entity
+    table: null
+    repositoryClass: STEBundle\Repository\SolutionRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+
+        content:    #treść rozwiązania
+            type: text
+
+    oneToOne:
+
+        task:       #relacja z obiektem zadanie
+            targetEntity: STEBundle\Entity\Task
+            mappedBy: solution
+
+    lifecycleCallbacks: {  }
